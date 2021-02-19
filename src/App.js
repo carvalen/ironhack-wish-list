@@ -3,32 +3,23 @@ import React from "react";
 import Form from './components/Form/Form';
  import List from './components/List/List';
 
- const wishes = [{ wish: "Travel" }];
-function App() {
-
-    const [wishesList, startwishList] = React.useState(wishes);
-
-
+ function App() {
+    const [wishes, setWishes] = React.useState([]);
+    const addWish = wish => setWishes([wish, ...wishes])
+    const removeWish = wish => {
+      const newState = wishes.filter(wishName => wishName !== wish)
+      setWishes(newState)
+    }
     return (
-        <div className="container">
-            <h1>App</h1>
-            <div className="cards-container">
-                
-                    {/* <button className="button">remove</button>
-                </div>
-                <div className="card">
-                    <button className="button">remove</button>
-                </div> */}
-                <List wishList={wishesList} startwishList={startwishList} />
-                
-            </div>
-
-            <Form action="" className="form"/>
-            
-            
-        
-        </div>
-    )
-}
-
-export default App
+      <div className="App">
+        {/* List recibe por props wishes y removeWish
+        removeWish, es una funcion que recibe el nombre del wish y ejecuta un 
+        setWishes removiendo el wish del array de wishes */}
+        <List wishes={wishes} removeWish={removeWish} />
+        <Form addWish={addWish} />
+      </div>
+    );
+    }
+    
+  export default App;
+  
